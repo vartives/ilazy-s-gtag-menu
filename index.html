@@ -242,6 +242,34 @@
         @keyframes terminalScan {
             100% { left: 100%; }
         }
+		
+		.snow {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: fall linear forwards;
+            filter: blur(1px);
+        }
+
+        .snowball {
+            width: 6px;
+            height: 6px;
+            filter: blur(0.5px);
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-5vh) translateX(0);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(100vh) translateX(15px);
+                opacity: 0.4;
+            }
+        }
 
     </style>
 </head>
@@ -289,7 +317,7 @@
             <p>Adjustable speed multipliers with smooth transition curves</p>
         </div>
         <div class="feature-card">
-            <h3>👻 Phantom Mode</h3>
+            <h3>👻 Gorilla Not Bypass</h3>
             <p>Complete player invisibility with network spoofing</p>
         </div>
         <div class="feature-card">
@@ -301,14 +329,43 @@
             <p>Fully customizable control bindings with macros</p>
         </div>
     </div>
+	
+	<script>
+        function createSnow() {
+            const snow = document.createElement('div');
+            snow.className = Math.random() > 0.3 ? 'snow' : 'snowball snow';
+            
+            snow.style.left = Math.random() * 100 + 'vw';
+            
+            const size = Math.random() * 3 + 2;
+            snow.style.width = size + 'px';
+            snow.style.height = size + 'px';
+
+            const duration = Math.random() * 3 + 3;
+            snow.style.animationDuration = duration + 's';
+            
+            document.body.appendChild(snow);
+
+            snow.addEventListener('animationend', () => {
+                snow.style.position = 'fixed';
+                snow.style.bottom = '0';
+                snow.style.animation = 'none';
+
+                setTimeout(() => {
+                    snow.remove();
+                }, 20000);
+            });
+        }
+
+        setInterval(createSnow, 100);
+    </script>
 
     <script>
-        // Smooth shape animations
+	    
         document.querySelectorAll('.shape').forEach((shape, index) => {
             shape.style.animationDelay = `${index * 2}s`;
         });
-
-        // Add hover scaling to feature cards
+	    
         document.querySelectorAll('.feature-card').forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
